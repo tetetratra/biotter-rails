@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_twitter_id: 1
+  user_screen_name: MyString
+  user_name: MyString
+  user_description: MyString
+  user_profile_image_url: MyString
+  user_profile_image: 
+  user_profile_banner_url: MyString
+  user_profile_banner: 
+  user_location: MyString
+  user_url: MyString
+
+two:
+  user_twitter_id: 1
+  user_screen_name: MyString
+  user_name: MyString
+  user_description: MyString
+  user_profile_image_url: MyString
+  user_profile_image: 
+  user_profile_banner_url: MyString
+  user_profile_banner: 
+  user_location: MyString
+  user_url: MyString
