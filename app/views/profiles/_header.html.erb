@@ -1,0 +1,18 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <a class="navbar-brand h1" href="/">
+      <img src="biotter.png" alt="icon" class="mr-2 rounded" style="width: 70px; height: 70px;" data-holder-rendered="true">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <%= form_tag('', method: 'GET', class: 'form-inline mt-2 mt-md-0') do %>
+        <div class="input-group-prepend"><span class="input-group-text">@</span></div>
+        <%= text_field_tag(:user_name, @user_name, placeholder: 'user_name', class: 'form-control mr-sm-2h') %>
+        <%= submit_tag('Search', class: 'btn btn-outline-success my-2 my-sm-0') %>
+      <% end %>
+    </div>
+  </nav>
+</header>
+

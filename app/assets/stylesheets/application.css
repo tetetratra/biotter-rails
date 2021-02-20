@@ -13,3 +13,50 @@
  *= require_tree .
  *= require_self
  */
+
+main {
+  margin-top: 8rem;
+}
+
+div.search-form * {
+  float: left;
+}
+
+div.row_content:hover {
+  background: #EEEEEE;
+}
+
+strong.user-name {
+  font-size: 14px;
+  padding-bottom: 5px;
+}
+
+a.download_button {
+  background: #DDFFEE;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 5px;
+}
+
+a[rel=next], a[rel=prev] {
+  display: inline-block;
+  padding: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: #DDDDFF;
+}
+
+.banner {
+  position: absolute;
+  top: 15px;
+  right: 130px;
+}
+
+@media screen and (max-width: 42em) {
+  .banner {
+    top: 80px;
+    right: 0px;
+  }
+}
