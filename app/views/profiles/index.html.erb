@@ -1,4 +1,3 @@
-
 <%= render 'header' %>
 
 <main role="main" class="container">
@@ -20,15 +19,37 @@
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray" >
             <strong class="user-name d-block text-gray-dark"><a href='/?user_name=<%= profile.user_screen_name %>'><%= profile.user_name %></a></strong>
             <span class="d-block">
-              <a target='_blank' href="https://twitter.com/<%= profile.user_screen_name %>">@<%= profile.user_screen_name %></a>
+              <a href="https://twitter.com/<%= profile.user_screen_name %>">@<%= profile.user_screen_name %></a>&nbsp;<i class="fas fa-external-link-alt"></i>
             </span>
             <%= profile.user_description.to_s %>
+
+            <br>
+
+            <% unless (l = profile.user_location).blank? %>
+              <i class="fas fa-map-marker-alt"></i>
+              <% if l.match?(/http/) %>
+                <a href="<%= l %>"><%= l.sub(%r{^https?:\/\/}, '') %>&nbsp;</a>
+              <% else %>
+                <%= l %>&nbsp;
+              <% end %>
+            <% end %>
+
+            <% unless (l = profile.user_url).blank? %>
+              <i class="fas fa-paperclip"></i>
+              <% if l.match?(/http/) %>
+                <a href="<%= l %>"><%= l.sub(%r{^https?:\/\/}, '') %>&nbsp;</a>
+              <% else %>
+                <%= l %>&nbsp;
+              <% end %>
+            <% end %>
           </p>
           <span class='created_at'><%= profile.created_at.strftime('%Y-%-m-%-d %H:%M') %></span>
         </div>
       </div>
     <% end %>
   </div>
+  <%= link_to_prev_page @profiles, '前へ' %>
+  <%= link_to_next_page @profiles, '次へ' %>
 </main>
 
 <%= render 'footer' %>

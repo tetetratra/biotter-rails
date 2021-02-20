@@ -13,14 +13,14 @@
 ActiveRecord::Schema.define(version: 2021_02_20_065135) do
 
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "user_twitter_id"
-    t.string "user_screen_name"
-    t.string "user_name"
-    t.string "user_description"
-    t.binary "user_profile_image"
-    t.binary "user_profile_banner"
-    t.string "user_location"
-    t.string "user_url"
+    t.bigint "user_twitter_id"
+    t.string "user_screen_name", limit: 1000
+    t.string "user_name", limit: 1000
+    t.string "user_description", limit: 1000
+    t.binary "user_profile_image", size: :medium
+    t.binary "user_profile_banner", size: :medium
+    t.string "user_location", limit: 1000
+    t.string "user_url", limit: 1000
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
