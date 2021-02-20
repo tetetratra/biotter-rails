@@ -17,18 +17,10 @@ ActiveRecord::Schema.define(version: 2021_02_20_065135) do
     t.string "user_screen_name"
     t.string "user_name"
     t.string "user_description"
-    t.string "user_profile_image_url"
     t.binary "user_profile_image"
-    t.string "user_profile_banner_url"
     t.binary "user_profile_banner"
     t.string "user_location"
     t.string "user_url"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "user_twitter_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
