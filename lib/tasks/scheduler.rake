@@ -45,13 +45,13 @@ class Exec
     end.compact
 
     follower_profiles.each do |follower_profile|
-      next unless Profile.find_by(**follower_profile).empty?
+      next if Profile.find_by(**follower_profile)
 
       Profile.create(**follower_profile)
 
       safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
       tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}".truncate(100) \
-       + "\nhttps://biotter.tetetratra.net/#{follower_profile[:user_screen_name]}"
+       + "\nhttps://biotter.tetetratra.net/?user_name=#{follower_profile[:user_screen_name]}"
       client.update(tweet_str)
     end
   end
