@@ -52,3 +52,4 @@ production:
   database: biotter_rails_production
   username: biotter_rails
   password: <%= ENV['BIOTTER_RAILS_DATABASE_PASSWORD'] %>
+  adapter: postgresql
