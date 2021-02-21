@@ -45,14 +45,15 @@ class Exec
     end.compact
 
     follower_profiles.each do |follower_profile|
-      next if Profile.find_by(**follower_profile)
+      next unless self.new_follower_profile?(follower_profile)
 
       Profile.create(**follower_profile)
 
       safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
       tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}".truncate(100) \
        + "\nhttps://biotter.tetetratra.net/?user_name=#{follower_profile[:user_screen_name]}"
-      client.update(tweet_str)
+      client.update(tweet_str) if Rails.env.production?
+      p tweet_str if Rails.env.development?
     end
   end
 
@@ -87,4 +88,21 @@ class Exec
 
     body
   end
+
+  def self.new_follower_profile?(follower_profile)
+    latest_profile = Profile.where(user_twitter_id: follower_profile[:user_twitter_id]).order('created_at DESC').first
+    return true if latest_profile.nil?
+
+    follower_profile != latest_profile.attributes.symbolize_keys.slice(
+      :user_twitter_id,
+      :user_screen_name,
+      :user_name,
+      :user_location,
+      :user_description,
+      :user_url,
+      :user_profile_image,
+      :user_profile_banner
+    )
+  end
 end
+
