@@ -1,24 +1,32 @@
-# README
+# Biotter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ツイッターのプロフィール履歴を残すことができるwebサイト
 
-Things you may want to cover:
+サイト: http://biotter.tetetratra.net
+Bot: https://twitter.com/_Biotter_
 
-* Ruby version
+Botをフォローすると登録、アンフォローで登録解除です。
 
-* System dependencies
+---
 
-* Configuration
+## 技術的な
 
-* Database creation
+- サーバー
+  - Ruby on Rails on heroku
+- DB
+  - herokuのDB
+- 画像置き場
+  - s3
+- ssl非対応
 
-* Database initialization
 
-* How to run the test suite
+環境変数
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+BIOTTER_ACCESS_TOKEN
+BIOTTER_CONSUMER_KEY
+BIOTTER_ACCESS_TOKEN_SECRET
+BIOTTER_CONSUMER_SECRET
+```
 
-* Deployment instructions
 
-* ...
