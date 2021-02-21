@@ -114,7 +114,8 @@ end
 
 # 旧appから画像をクローリング
 task :import_image_from_oldapp => :environment do
-  Profile.all.each do |profile|
+  Profile.all.reverse.each do |profile|
+    sleep 0.5
     uri = URI.parse("https://biotter.tetetratra.net/profile_image/#{profile.id}")
     request = Net::HTTP::Get.new(uri)
     req_options = { use_ssl: uri.scheme == "https" }
@@ -127,12 +128,12 @@ task :import_image_from_oldapp => :environment do
 
     profile.user_profile_image.attach(io: StringIO.new(response.body), filename: 'icon.png')
     profile.save
-    sleep 0.5
   end
 end
 
 task :import_banner_from_oldapp => :environment do
-  Profile.all.each do |profile|
+  Profile.all.reverse.each do |profile|
+    sleep 0.5
     uri = URI.parse("https://biotter.tetetratra.net/profile_banner/#{profile.id}")
     request = Net::HTTP::Get.new(uri)
     req_options = { use_ssl: uri.scheme == "https" }
@@ -145,7 +146,6 @@ task :import_banner_from_oldapp => :environment do
 
     profile.user_profile_banner.attach(io: StringIO.new(response.body), filename: 'banner.png')
     profile.save
-    sleep 0.5
   end
 end
 
