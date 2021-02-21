@@ -3,6 +3,15 @@ task :crawl => :environment do
 end
 
 class Exec
+  PARAMS = [
+    :user_twitter_id,
+    :user_screen_name,
+    :user_name,
+    :user_location,
+    :user_description,
+    :user_url
+  ]
+
   def self.crawl
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV['BIOTTER_CONSUMER_KEY']
@@ -47,7 +56,10 @@ class Exec
     follower_profiles.each do |follower_profile|
       next unless self.new_follower_profile?(follower_profile)
 
-      Profile.create(**follower_profile)
+      profile = Profile.new(**follower_profile.slice(*PARAMS))
+      profile.user_profile_image.attach(io: StringIO.new(follower_profile[:user_profile_image]), filename: 'icon.png') if follower_profile[:user_profile_image]
+      profile.user_profile_banner.attach(io: StringIO.new(follower_profile[:user_profile_banner]), filename: 'banner.png') if follower_profile[:user_profile_banner]
+      profile.save
 
       safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
       tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}".truncate(100) \
@@ -92,17 +104,10 @@ class Exec
   def self.new_follower_profile?(follower_profile)
     latest_profile = Profile.where(user_twitter_id: follower_profile[:user_twitter_id]).order('created_at DESC').first
     return true if latest_profile.nil?
+    return true if latest_profile.user_profile_image.try(:download) != follower_profile[:user_profile_image]
+    return true if latest_profile.user_profile_banner.try(:download) != follower_profile[:user_profile_banner]
 
-    follower_profile != latest_profile.attributes.symbolize_keys.slice(
-      :user_twitter_id,
-      :user_screen_name,
-      :user_name,
-      :user_location,
-      :user_description,
-      :user_url,
-      :user_profile_image,
-      :user_profile_banner
-    )
+    follower_profile.slice(*PARAMS) != latest_profile.attributes.symbolize_keys.slice(*PARAMS)
   end
 end
 

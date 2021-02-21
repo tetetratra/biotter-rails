@@ -55,6 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'kaminari'
 gem 'twitter'
+gem "aws-sdk-s3", require: false
 
 group :production do
   gem 'pg'
