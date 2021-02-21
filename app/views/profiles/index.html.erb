@@ -6,14 +6,14 @@
     <% @profiles.each do |profile| %>
       <div class='profile'>
         <div class="media text-muted pt-3 row_content" style="position: relative;">
-          <% if img = profile.user_profile_image %>
+          <% if profile.user_profile_image.attached? %>
             <a href='/?user_name=<%= profile.user_screen_name %>'>
-              <img alt="icon" class="mr-2 rounded icon-image" style="width: 55px; height: 55px;" data-holder-rendered="true" src="data:image/png;base64,<%= Base64.strict_encode64(img) %>" />
+              <img alt="icon" class="mr-2 rounded icon-image" style="width: 55px; height: 55px;" data-holder-rendered="true" src="<%= url_for(profile.user_profile_image) %>" />
             </a>
           <% end %>
-          <% if (banner = profile.user_profile_banner) && banner.empty?.! %>
+          <% if profile.user_profile_banner.attached? %>
             <div class="banner">
-              <img alt="icon" class="mr-2 rounded banner-image" style="width: 100px; height: 33px;" data-holder-rendered="true" src="data:image/png;base64,<%= Base64.strict_encode64(banner) %>" />
+              <img alt="icon" class="mr-2 rounded banner-image" style="width: 100px; height: 33px;" data-holder-rendered="true" src="<%= url_for(profile.user_profile_banner) %>" />
             </div>
           <% end %>
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray" >
