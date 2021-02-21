@@ -63,7 +63,7 @@ class Exec
 
       safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
       tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}".truncate(100) \
-       + "\nhttps://biotter.tetetratra.net/?user_name=#{follower_profile[:user_screen_name]}"
+       + "\nhttp://biotter.tetetratra.net/?user_name=#{follower_profile[:user_screen_name]}"
       client.update(tweet_str) if Rails.env.production?
       p tweet_str if Rails.env.development?
     end
@@ -112,7 +112,7 @@ class Exec
 end
 
 
-# 旧appから画像をクローリング
+# 旧appから画像をクローリング。使い捨てスクリプト
 task :import_image_from_oldapp => :environment do
   Profile.all.reverse.each do |profile|
     sleep 0.5
