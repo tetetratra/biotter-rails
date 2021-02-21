@@ -125,7 +125,7 @@ task :import_image_from_oldapp => :environment do
 
     next unless response.code == '200'
 
-    profile.user_profile_image.attach(io: response.body, filename: 'icon.png')
+    profile.user_profile_image.attach(io: StringIO.new(response.body), filename: 'icon.png')
     profile.save
     sleep 0.5
   end
@@ -143,7 +143,7 @@ task :import_banner_from_oldapp => :environment do
 
     next unless response.code == '200'
 
-    profile.user_profile_banner.attach(io: response.body, filename: 'banner.png')
+    profile.user_profile_banner.attach(io: StringIO.new(response.body), filename: 'banner.png')
     profile.save
     sleep 0.5
   end
