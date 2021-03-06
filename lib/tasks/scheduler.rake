@@ -3,13 +3,16 @@ task :crawl => :environment do
 end
 
 class Exec
+  require 'digest/md5'
   PARAMS = [
     :user_twitter_id,
     :user_screen_name,
     :user_name,
     :user_location,
     :user_description,
-    :user_url
+    :user_url,
+    :user_profile_image_hash,
+    :user_profile_banner_hash
   ]
 
   def self.crawl
@@ -46,7 +49,9 @@ class Exec
         user_description: user_description,
         user_url: user_url,
         user_profile_image: user_profile_image,
-        user_profile_banner: user_profile_banner
+        user_profile_banner: user_profile_banner,
+        user_profile_image_hash: Digest::MD5.hexdigest(user_profile_image),
+        user_profile_banner_hash: Digest::MD5.hexdigest(user_profile_banner)
       }
     rescue => e
       p e.full_message(highlight: false)
@@ -104,8 +109,6 @@ class Exec
   def self.new_follower_profile?(follower_profile)
     latest_profile = Profile.where(user_twitter_id: follower_profile[:user_twitter_id]).order('created_at DESC').first
     return true if latest_profile.nil?
-    return true if latest_profile.user_profile_image.try(:download) != follower_profile[:user_profile_image]
-    return true if latest_profile.user_profile_banner.try(:download) != follower_profile[:user_profile_banner]
 
     follower_profile.slice(*PARAMS) != latest_profile.attributes.symbolize_keys.slice(*PARAMS)
   end
@@ -114,18 +117,14 @@ end
 task :add_image_hash => :environment do
   require 'digest/md5'
   Profile.all.find_each do |profile|
-    if profile.user_profile_image
-      if img = profile.user_profile_image.try(:download)
-        hash = Digest::MD5.hexdigest(img)
-        profile.update(user_profile_image_hash: hash)
-      end
+    if profile.user_profile_image && img = profile.user_profile_image.try(:download)
+      hash = Digest::MD5.hexdigest(img)
+      profile.update(user_profile_image_hash: hash)
     end
 
-    if profile.user_profile_banner
-      if img = profile.user_profile_banner.try(:download)
-        hash = Digest::MD5.hexdigest(img)
-        profile.update(user_profile_banner_hash: hash)
-      end
+    if profile.user_profile_banner && img = profile.user_profile_banner.try(:download)
+      hash = Digest::MD5.hexdigest(img)
+      profile.update(user_profile_banner_hash: hash)
     end
   end
 end
