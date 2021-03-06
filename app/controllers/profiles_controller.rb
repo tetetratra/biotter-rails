@@ -7,7 +7,7 @@ class ProfilesController < ApplicationController
       if user_twitter_ids.empty?
         @profiles = Profile.none.page(nil)
         @table_title = "#{@user_name}さんは見つかりません..."
-        @title = 'Biotter'
+        @title = nil
       else
         @profiles = Profile.where(user_twitter_id: user_twitter_ids).order('created_at DESC').page(params[:page])
         @table_title = "#{@profiles.first.user_name}さんのプロフィール履歴"
@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
     else
       @profiles = Profile.order('created_at DESC').page(params[:page])
       @table_title = '最近の更新'
-      @title = 'Biotter'
+      @title = nil
     end
   end
 end
