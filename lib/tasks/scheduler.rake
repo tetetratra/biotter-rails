@@ -111,7 +111,26 @@ class Exec
   end
 end
 
+task :add_image_hash => :environment do
+  require 'digest/md5'
+  Profile.all.find_each do |profile|
+    if profile.user_profile_image
+      if img = profile.user_profile_image.try(:download)
+        hash = Digest::MD5.hexdigest(img)
+        profile.update(user_profile_image_hash: hash)
+      end
+    end
 
+    if profile.user_profile_banner
+      if img = profile.user_profile_banner.try(:download)
+        hash = Digest::MD5.hexdigest(img)
+        profile.update(user_profile_banner_hash: hash)
+      end
+    end
+  end
+end
+
+=begin
 # 旧appから画像をクローリング。使い捨てスクリプト
 task :import_image_from_oldapp => :environment do
   Profile.all.reverse.each do |profile|
@@ -148,4 +167,4 @@ task :import_banner_from_oldapp => :environment do
     profile.save
   end
 end
-
+=end
