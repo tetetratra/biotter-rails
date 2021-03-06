@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= @title %></title>
+    <title><%= @title || 'Biotter' %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -13,10 +13,15 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="twitter:card" content="summary"/>
-    <meta property="og:url" content="http://biotter.tetetratra.net"/>
+    <% if @title %>
+      <meta property="og:url" content="https://biotter.herokuapp.com/?user_name=<% @profiles.first.user_screen_name %>" />
+      <meta property="og:description" content="<% @table_title %>" />
+    <% else %>
+      <meta property="og:url" content="https://biotter.herokuapp.com" />
+      <meta property="og:description" content="ツイッターのプロフィール履歴を残せます" />
+    <% end %>
+    <meta property="og:image" content="https://biotter.herokuapp.com" />
     <meta property="og:title" content="Biotter"/>
-    <meta property="og:description" content="プロフィール履歴を残せます"/>
-    <meta property="og:image" content="http://biotter.tetetratra.net/biotter.png"/>
   </head>
 
   <body>

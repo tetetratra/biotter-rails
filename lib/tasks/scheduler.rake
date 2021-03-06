@@ -24,7 +24,8 @@ class Exec
       config.access_token_secret = ENV['BIOTTER_ACCESS_TOKEN_SECRET']
     end
 
-    follower_profiles = client.followers.map(&:to_h).map do |follower|
+    biotter = client.user
+    follower_profiles = [biotter, *client.followers].map(&:to_h).map do |follower|
       # ツイッター用に短縮されたURLを戻すため、URLの対応テーブルをつくる
       url_master = ((follower[:entities][:url] && follower[:entities][:url][:urls]).to_a + follower[:entities][:description][:urls])
                      .map { |url| [url[:url], url[:expanded_url]] }

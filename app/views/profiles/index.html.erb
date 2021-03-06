@@ -52,4 +52,7 @@
   <%= link_to_next_page @profiles, '次へ' %>
 </main>
 
-<%= render 'footer' %>
+<% if @title.nil? %>
+  <%= render 'footer' %>
+<% end %>
+

@@ -2,7 +2,7 @@
 
 ツイッターのプロフィール履歴を残すことができるwebサイト
 
-サイト: http://biotter.tetetratra.net
+サイト: https://biotter.herokuapp.com
 
 
 Bot: <a href="https://twitter.com/_Biotter_">@\_Biotter\_</a>
