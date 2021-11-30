@@ -1,5 +1,7 @@
 # Biotter
 
+![biotter](https://user-images.githubusercontent.com/44367208/143977486-7a6b1173-f21b-47f5-a32c-517778053a15.jpg)
+
 ## !!サービス終了しました!!
 2021年6月をもちまして、biotterのサービスを終了させていただきまました。
 長らくのご利用、本当にありがとうございました。
